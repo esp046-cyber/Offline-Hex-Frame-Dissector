@@ -33,6 +33,7 @@ function onChange(s) {
 }
 
 const editor = initEditor(input, onChange);
+try { const d = sessionStorage.getItem('fa-draft'); if (d) { sessionStorage.removeItem('fa-draft'); editor.setValue(d); } } catch {}
 $('sampleReq').addEventListener('click', () => editor.setValue(SAMPLE_REQUEST));
 $('sampleResp').addEventListener('click', () => editor.setValue(SAMPLE_RESPONSE));
 $('clearInput').addEventListener('click', () => { editor.setValue(''); input.focus(); });
