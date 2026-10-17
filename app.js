@@ -3,6 +3,9 @@ import { initEditor } from './js/editor.js';
 import { parseDNP3 } from './js/validator.js';
 import { renderResult, renderHistory, summaryOf } from './js/templates.js';
 import { saveDecode, getRecent, clearAll } from './js/db.js';
+import { initTabs } from './js/tabs.js';
+import { initDictionary } from './js/dictionary.js';
+import { initDecoders } from './js/decoders.js';
 
 const SAMPLE_REQUEST = '05 64 0B C4 0A 00 01 00 AC D1 C0 C0 01 3C 01 06 FF 50';
 const SAMPLE_RESPONSE = '05 64 15 44 01 00 0A 00 4D 19 C0 C0 81 90 08 1E 02 00 00 01 01 10 00 01 20 00 23 2D';
@@ -42,5 +45,6 @@ history.addEventListener('click', e => {
 const online = () => { $('net').textContent = navigator.onLine ? 'Online' : 'Offline: everything still works'; $('net').dataset.online = navigator.onLine; };
 window.addEventListener('online', online); window.addEventListener('offline', online); online();
 
+initTabs(); initDictionary(); initDecoders();
 refreshHistory();
 if (new URLSearchParams(location.search).get('action') === 'decode') input.focus();

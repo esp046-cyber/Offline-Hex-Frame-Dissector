@@ -1,7 +1,7 @@
 /* DNP3 FieldAssist service worker: precache everything, serve cache-first, work fully offline.
    `npm run build` (Workbox injectManifest) replaces self.__WB_MANIFEST with the real file list + revisions. */
 const FALLBACK = ['index.html', 'offline.html', 'style.css', 'app.js', 'sw-register.js', 'manifest.webmanifest',
-  'js/editor.js', 'js/validator.js', 'js/templates.js', 'js/tag-converter.js', 'js/db.js'].map(url => ({ url, revision: 'dev' }));
+  'js/editor.js', 'js/validator.js', 'js/templates.js', 'js/tag-converter.js', 'js/db.js', 'js/tabs.js', 'js/dictionary.js', 'js/decoders.js'].map(url => ({ url, revision: 'dev' }));
 const MANIFEST = self.__WB_MANIFEST || FALLBACK;
 
 const sig = MANIFEST.map(e => e.url + (e.revision || '')).join('|');

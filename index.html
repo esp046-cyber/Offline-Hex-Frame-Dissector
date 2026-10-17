@@ -17,23 +17,62 @@
   <h1>DNP3 FieldAssist</h1>
   <span id="net" class="net" data-online="true">Online</span>
 </header>
+<nav class="tabs" role="tablist" aria-label="Tools">
+  <button type="button" role="tab" id="tab-dissector" data-tab="dissector" aria-selected="true" aria-controls="panel-dissector">Frame Dissector</button>
+  <button type="button" role="tab" id="tab-dictionary" data-tab="dictionary" aria-selected="false" aria-controls="panel-dictionary" tabindex="-1">Object Dictionary</button>
+  <button type="button" role="tab" id="tab-decoders" data-tab="decoders" aria-selected="false" aria-controls="panel-decoders" tabindex="-1">Value Decoders</button>
+</nav>
 <main>
-  <section class="input-panel">
-    <label for="hexInput">Raw DNP3 hex</label>
-    <textarea id="hexInput" rows="5" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="05 64 0B C4 0A 00 01 00 ..."></textarea>
-    <p id="status" class="status" role="status">Paste a hex string to decode it.</p>
-    <div class="actions">
-      <button type="button" id="sampleReq">Load sample request</button>
-      <button type="button" id="sampleResp">Load sample response with IIN faults</button>
-      <button type="button" id="clearInput" class="ghost">Clear</button>
+  <div role="tabpanel" id="panel-dissector" aria-labelledby="tab-dissector">
+    <section class="panel">
+      <label for="hexInput">Raw DNP3 hex</label>
+      <textarea id="hexInput" rows="5" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="05 64 0B C4 0A 00 01 00 ..."></textarea>
+      <p id="status" class="status" role="status">Paste a hex string to decode it.</p>
+      <div class="actions">
+        <button type="button" id="sampleReq">Load sample request</button>
+        <button type="button" id="sampleResp">Load sample response with IIN faults</button>
+        <button type="button" id="clearInput" class="ghost">Clear</button>
+      </div>
+    </section>
+    <div id="results" aria-live="polite"></div>
+    <details class="history">
+      <summary>Recent decodes</summary>
+      <ul id="historyList" class="hist-list"></ul>
+      <button type="button" id="clearHistory" class="ghost">Delete saved history</button>
+    </details>
+  </div>
+
+  <div role="tabpanel" id="panel-dictionary" aria-labelledby="tab-dictionary" hidden>
+    <section class="panel">
+      <label for="dictSearch">Search objects</label>
+      <input id="dictSearch" type="search" inputmode="search" autocomplete="off" placeholder="30, analog, CROB, counter, time ...">
+      <p id="dictCount" class="status" role="status"></p>
+    </section>
+    <div id="dictResults"></div>
+  </div>
+
+  <div role="tabpanel" id="panel-decoders" aria-labelledby="tab-decoders" hidden>
+    <div class="cards">
+      <section class="panel">
+        <h2>Object 50 time</h2>
+        <label for="timeInput">48-bit timestamp, little-endian hex</label>
+        <input id="timeInput" type="text" spellcheck="false" autocomplete="off" placeholder="D2 04 00 00 00 00">
+        <div id="timeOut" aria-live="polite"></div>
+      </section>
+      <section class="panel">
+        <h2>Analog / counter value</h2>
+        <label for="valueInput">16 or 32-bit value, little-endian hex</label>
+        <input id="valueInput" type="text" spellcheck="false" autocomplete="off" placeholder="E8 03  or  18 FC FF FF">
+        <div id="valueOut" aria-live="polite"></div>
+      </section>
+      <section class="panel">
+        <h2>CROB control code (Object 12)</h2>
+        <label for="crobInput">1-byte control code, hex</label>
+        <input id="crobInput" type="text" spellcheck="false" autocomplete="off" placeholder="41">
+        <div id="crobOut" aria-live="polite"></div>
+      </section>
     </div>
-  </section>
-  <div id="results" aria-live="polite"></div>
-  <details class="history">
-    <summary>Recent decodes</summary>
-    <ul id="historyList" class="hist-list"></ul>
-    <button type="button" id="clearHistory" class="ghost">Delete saved history</button>
-  </details>
+  </div>
 </main>
 <footer class="foot"><a href="privacy.html">Privacy</a>: nothing you paste leaves this device.</footer>
 <script src="sw-register.js" defer></script>
