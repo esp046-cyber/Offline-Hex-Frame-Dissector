@@ -1,6 +1,6 @@
 // Registers the service worker once the page has loaded.
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').catch(err => console.warn('Service worker registration failed:', err));
+    navigator.serviceWorker.register('service-worker.js').catch(err => console.warn('Service worker registration failed:', err));
   });
 }

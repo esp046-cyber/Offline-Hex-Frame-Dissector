@@ -7,7 +7,8 @@ const MANIFEST = self.__WB_MANIFEST || FALLBACK;
 const sig = MANIFEST.map(e => e.url + (e.revision || '')).join('|');
 let h = 0; for (let i = 0; i < sig.length; i++) h = (h * 31 + sig.charCodeAt(i)) | 0;
 const CACHE = 'fieldassist-' + (h >>> 0).toString(16);
-const abs = u => new URL(u, self.location.origin + '/').href;
+const SCOPE = self.registration.scope;               // works at / and at /repo-name/
+const abs = u => new URL(u, SCOPE).href;
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(MANIFEST.map(m => new Request(abs(m.url), { cache: 'reload' })))).then(() => self.skipWaiting()));
@@ -25,8 +26,11 @@ self.addEventListener('fetch', e => {
     const url = new URL(req.url);
     let hit = await cache.match(req, { ignoreSearch: true });
     if (!hit && req.mode === 'navigate') {
-      const p = url.pathname === '/' ? '/index.html' : url.pathname.replace(/\/$/, '') + (url.pathname.includes('.') ? '' : '.html');
-      hit = await cache.match(abs(p));
+      const scopePath = new URL(SCOPE).pathname;
+      let rel = url.pathname.startsWith(scopePath) ? url.pathname.slice(scopePath.length) : '';
+      if (!rel) rel = 'index.html';
+      else if (!rel.includes('.')) rel = rel.replace(/\/$/, '') + '.html';
+      hit = await cache.match(abs(rel));
     }
     if (hit) return hit;
     try { return await fetch(req); }
