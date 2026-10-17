@@ -1,0 +1,6 @@
+/* TEAM */
+Project: DNP3 FieldAssist
+Site: https://dnp3-fieldassist.example.com
+
+/* SITE */
+Standards: HTML5, CSS3, ES modules, Service Worker, IndexedDB

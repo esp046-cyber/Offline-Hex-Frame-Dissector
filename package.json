@@ -1,0 +1,25 @@
+{
+  "name": "dnp3-fieldassist",
+  "version": "1.0.0",
+  "description": "Offline-first PWA for decoding raw DNP3 hex frames during SCADA loop checks.",
+  "private": true,
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "copy": "shx mkdir -p dist && shx cp index.html offline.html 404.html privacy.html style.css app.js sw-register.js manifest.webmanifest robots.txt sitemap.xml browserconfig.xml humans.txt security.txt dist/ && shx cp -r js icons .well-known dist/",
+    "sw": "workbox injectManifest workbox-config.js",
+    "build": "npm run clean && npm run copy && npm run sw",
+    "serve": "npm run build && serve dist -l 8080",
+    "dev": "serve . -l 8080"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4",
+    "shx": "^0.3.4",
+    "workbox-cli": "^7.3.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["dnp3", "scada", "pwa", "offline", "rtu", "commissioning", "iin"]
+}

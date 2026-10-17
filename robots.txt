@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dnp3-fieldassist.example.com/sitemap.xml
